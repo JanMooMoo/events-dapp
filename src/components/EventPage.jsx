@@ -9,6 +9,7 @@ import ipfs from '../utils/ipfs';
 import Loading from './Loading';
 import CheckUser from './CheckUser';
 
+
 class EventPage extends Component {
 
     constructor(props, context) {
@@ -23,6 +24,7 @@ class EventPage extends Component {
 			  ipfs_problem: false,
 			  approve_tx: null,
 			  waiting_approve: false
+			  
 		  };
 		  this.isCancelled = false;
 	}
@@ -86,16 +88,21 @@ class EventPage extends Component {
 		}
 	}
 
-	buyTicket = () => {
+	 buyTicket = () => {
+
 		if (this.props.contracts['OpenEvents'].getEvent[this.event].value[3]) {
 			let tx = this.contracts['StableToken'].methods.approve.cacheSend(this.contracts['OpenEvents'].address, this.props.contracts['OpenEvents'].getEvent[this.event].value[2]);
 			this.setState({
 				approve_tx: tx,
 				waiting_approve: true
 			});
-		} else {
-			this.contracts['OpenEvents'].methods.buyTicket.cacheSend(this.props.match.params.id, {value: this.props.contracts['OpenEvents'].getEvent[this.event].value[2]});
 		}
+		
+		 else {
+			 this.contracts['OpenEvents'].methods.buyTicket.cacheSend(this.props.match.params.id, {value: this.props.contracts['OpenEvents'].getEvent[this.event].value[2]});
+			
+		}
+		
 	}
 
 	render() {
@@ -144,14 +151,15 @@ class EventPage extends Component {
 							<div className="card">
 								<img className="card-img-top event-image" src={image} alt="Event" />
 								<div className="card-header event-header">
-									<img className="float-left" src={makeBlockie(event_data[8])} alt="User Identicon" />
+									<img className="float-left" src={makeBlockie(event_data[9])} alt="User Identicon" />
 									<p className="small text-truncate mb-0">
-										Creator: <a href={"https://rinkeby.etherscan.io/address/" + event_data[8]} target="_blank">
-											{event_data[8]}
+										Creator: <a href={"https://rinkeby.etherscan.io/address/" + event_data[9]} target="_blank">
+											{event_data[9]}
 										</a>
 									</p>
 								</div>
 								<ul className="list-group list-group-flush">
+									<li className="list-group-item">Category: {event_data[8]}</li>
 									<li className="list-group-item">Price: <img src={'/images/'+symbol} className="event_price-image"  alt="Event Price" /> {price}</li>
 									<li className="list-group-item">{date.toLocaleDateString()} at {date.toLocaleTimeString()}</li>
 									<li className="list-group-item">Tickets: {event_data[6]}/{max_seats}</li>
