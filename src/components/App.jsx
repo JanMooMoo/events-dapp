@@ -86,7 +86,7 @@ class App extends Component
 			body =
 				<div>
 					<Switch>
-						<Route exact path="/" component={Home} />
+						<Route exact path="/" component={FindEvents} />
 						<Route component={NetworkError} />
 					</Switch>
 				</div>
