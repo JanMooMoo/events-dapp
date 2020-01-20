@@ -260,7 +260,7 @@ class TopicLandingPage extends Component
 
 
 		if (typeof this.props.contracts['OpenEvents'].getEventsCount[this.eventCount] !== 'undefined' ) {
-      let count = this.state.active_length;
+      let count = this.state.Topic_Events.length;
     
 			if (count === 0) {
 				body = <p className="text-center not-found"><span role="img" aria-label="thinking">🤔</span>&nbsp;No events found. <a href="/createevent">Try creating one.</a></p>;

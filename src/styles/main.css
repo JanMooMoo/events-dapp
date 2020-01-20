@@ -437,12 +437,13 @@ button {
     left: 2%;
     border-radius: 100px / 5px;
     -webkit-box-shadow: 0 0 18px rgba(0,0,0,1);
-    box-shadow: 0 0 18px rgba(0,0,0,1);
+	box-shadow: 0 0 18px rgba(0,0,0,1);
 }
+
 
 .card-footer button {
 	padding: 5px 30px 5px 30px;
-  border-radius: 20px;
+  	border-radius: 20px;
 }
 
 .container-fluid:before  {
@@ -525,8 +526,12 @@ button {
 	cursor: pointer;
 }
 
+.card{
+	transition: all 0.5s;
+}
+
 .card:hover {
-	transform: scale(1.1);
+	transform: scale(1.05);
 	z-index: 999 !important;
 }
 

@@ -149,7 +149,7 @@ class MyEvents extends Component {
 		let body = <Loading />;
 
 		if (typeof this.props.contracts['OpenEvents'].eventsOf[this.events] !== 'undefined') {
-			let events = this.state.active_length;
+			let events = this.state.MyEvents.length;
 			
 			if (events === 0) {
 				body = <p className="text-center not-found"><span role="img" aria-label="thinking">🤔</span>&nbsp;No events found. <a href="/createevent">Try creating one.</a></p>;
