@@ -321,8 +321,7 @@ class PastEvents extends Component
   }
 }
 
-PastEvents.contextTypes =
-{
+PastEvents.contextTypes = {
     drizzle: PropTypes.object
 }
 

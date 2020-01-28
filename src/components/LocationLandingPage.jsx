@@ -163,8 +163,7 @@ class LocationLandingPage extends Component
 	}
 }
 
-LocationLandingPage.contextTypes =
-{
+LocationLandingPage.contextTypes = {
     drizzle: PropTypes.object
 }
 

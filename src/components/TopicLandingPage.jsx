@@ -366,8 +366,7 @@ class TopicLandingPage extends Component
 	}
 }
 
-TopicLandingPage.contextTypes =
-{
+TopicLandingPage.contextTypes = {
     drizzle: PropTypes.object
 }
 
