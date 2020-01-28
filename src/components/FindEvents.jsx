@@ -37,11 +37,29 @@ class FindEvents extends Component
 	    this.contracts = context.drizzle.contracts;
 	    this.eventCount = this.contracts['OpenEvents'].methods.getEventsCount.cacheCall();
 	    this.perPage = 6;
+      this.topicClick = this.topicClick.bind(this);
 
       this.toggleSortDate = this.toggleSortDate.bind(this); 
 	}
 
- 
+  topicClick(slug)
+  {
+
+    this.props.history.push("/topic/"+slug+"/"+1);
+    window.scrollTo(0, 0);
+  }
+
+  readMoreClick(location)
+  {
+    this.props.history.push(location);
+    window.scrollTo(0, 0);
+  }
+
+  ctasClick(slug)
+  {
+    this.props.history.push("/"+slug);
+    window.scrollTo(0, 0);
+  }
 
 
   //Loads Blockhain Data,
@@ -195,7 +213,8 @@ class FindEvents extends Component
 		}
 
 		return(
-      
+      <React.Fragment>
+     
 
 			<div className="retract-page-inner-wrapper-alternative">
 
@@ -224,11 +243,50 @@ class FindEvents extends Component
 
       <br /><br />
 
-      
+      <div className="topics-wrapper">
+
+      {/*
+      <h2><i className="fa fa-calendar-alt"></i> Browse Events By</h2>
+      <hr />
+
+        <div className="row user-list mt-4">
+          {eventCTAsJson.map(eventCTA => (
+            <div className="col-lg-4 pb-4 d-flex align-items-stretch" key={eventCTA.slug}>
+              <div className="topic" style={{ backgroundImage: "url(/images/cta"+eventCTA.image+")"}} onClick={() => {this.ctasClick(eventCTA.slug)}}>
+              <div className="topic-caption"><h3>{eventCTA.name}</h3><button className="btn">View Events</button></div>
+              </div>
+            </div>
+          ))}
+
+          <button className="btn read-more" onClick={() => {this.readMoreClick("/findevents/1")}}>All Events</button>
+        </div>
+        <br /><br />
+        */}
+
+      <h2><i className="fa fa-calendar-alt"></i> Popular Topics</h2>
+        <hr/>
+          <div className="row user-list mt-4">
+          {
+            topicsJson && topicsJson
+              .filter(topic => topic.popular === "true")
+              .map((topic, index) => {
+                return (
+                  <div className="col-lg-4 pb-4 d-flex align-items-stretch" key={topic.slug}>
+                    <div className="topic" style={{ backgroundImage: "url(/images/topics/" + topic.image +")"}} onClick={() => {this.topicClick(topic.slug)}}>
+                    <div className="topic-caption"><h3>{topic.name}</h3><button className="btn">View Topic</button></div>
+                    </div>
+                  </div>
+                );
+              })
+          }
+
+          <button className="btn read-more" onClick={() => {this.readMoreClick("/topics")}}>All Topics</button>
+          </div>      
+      </div>
 
     </div>
 
-
+    </React.Fragment>
 		);
   }
   
