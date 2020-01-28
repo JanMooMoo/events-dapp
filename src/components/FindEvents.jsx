@@ -213,7 +213,7 @@ class FindEvents extends Component
 		}
 
 		return(
-      <React.Fragment>
+  <div>
       <Carousel className="retract-page-inner-wrapper">
           <Carousel.Item className="slide1">
             <img className="d-block w-100" src="/images/slides/slide1.png" alt="First slide" />
@@ -326,8 +326,8 @@ class FindEvents extends Component
       </div>
 
     </div>
-
-    </React.Fragment>
+    </div>
+ 
 		);
   }
   
