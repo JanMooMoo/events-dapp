@@ -110,8 +110,8 @@ class TopicLandingPage extends Component
     const blockNumber = await web3.eth.getBlockNumber();
     
     this.setState({dateNow})
-    this.setState({blocks:blockNumber - 50000});
-    this.setState({latestblocks:blockNumber});
+    this.setState({blocks:blockNumber});
+    this.setState({latestblocks:blockNumber - 1});
     this.setState({Topic_Events:[]});
     
     if(this.state.isActive){
@@ -122,7 +122,7 @@ class TopicLandingPage extends Component
       }
     }
 
-    openEvents.events.CreatedEvent({fromBlock: this.state.latestblocks, toBlock:'latest'})
+    openEvents.events.CreatedEvent({fromBlock: this.state.blocks, toBlock:'latest'})
     .on('data', (log) => setTimeout(()=> {
     if(this.state.isActive && log.returnValues.category === this.props.match.params.page){
     this.setState({loading:true});
@@ -132,26 +132,12 @@ class TopicLandingPage extends Component
     var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
     if (this._isMounted){
     
-    
     //this.setState({incoming:false});
     this.setState({Topic_Events:newsort,topic_copy:newsort});
     this.setState({active_length:this.state.Topic_Events.length})
     this.setState({loading:false})};
     }
-    },8000))
-    
-   /* openEvents.getPastEvents("CreatedEvent",{fromBlock: this.state.blocks, toBlock:'latest'})
-    .then(events=>{
-    this.setState({loading:true})
-    var newest = events.filter((activeEvents)=>activeEvents.returnValues.time >=(dateNow) && activeEvents.returnValues.category === this.props.match.params.page);
-    var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-    if (this._isMounted){
-    this.setState({Topic_Events:newsort,topic_copy:newsort});
-    this.setState({loading:false})
-    this.setState({active_length:this.state.Topic_Events.length}); 
-  }
-     
-    }).catch((err)=>console.error(err))*/
+    },10000))
     
   }
 
@@ -162,7 +148,7 @@ class TopicLandingPage extends Component
 		if (this._isMounted){
 		this.setState({Topic_Events:[],active_length:0}); }
 	  
-		this.state.openEvents.getPastEvents("CreatedEvent",{fromBlock: 5000000, toBlock:'latest'})
+		this.state.openEvents.getPastEvents("CreatedEvent",{fromBlock: 5000000, toBlock:this.state.latestblocks})
 		.then(events=>{
 		this.setState({loading:true})
 		var newest = events.filter((activeEvents)=>activeEvents.returnValues.time >=(this.state.dateNow) && activeEvents.returnValues.category === this.props.match.params.page);
@@ -177,7 +163,7 @@ class TopicLandingPage extends Component
 		
     }
 
-    //Get My Active Events on Blockchain
+  //Get My Active Events on Blockchain
 	async loadPastEvents(){
 		
 		if (this._isMounted){
@@ -245,14 +231,15 @@ class TopicLandingPage extends Component
         } 
     else {
         newPolls = Topic_Events.concat().sort((a,b)=> a.returnValues.eventId - b.returnValues.eventId)
-      }
-    
+      }   
       this.setState({
       isOldestFirst: !this.state.isOldestFirst,
       Topic_Events:newPolls  
       });
     })}
   
+
+    
 	render()
   {
 		let body = <Loading />;

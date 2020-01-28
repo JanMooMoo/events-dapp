@@ -168,11 +168,13 @@ class Event extends Component {
 
 			let disabled = false;
 
+			let disabledStatus = " ";
+			let soldOut = " ";
 			if (event_data[4] && (Number(event_data[6]) >= Number(event_data[5]))) {
 
-        let disabledStatus = '';
 				disabled = true;
 				disabledStatus = <span><span role="img" aria-label="alert">⚠️</span> No tickets available.</span>;
+				soldOut = <p className="sold_out">Sold Out</p>;
 			}
 
 			if (date.getTime() < new Date().getTime()) {
@@ -188,11 +190,15 @@ class Event extends Component {
 	
 			body =
 				<div className="card">
-					<Link to={"/event/" + this.props.id}>
-            <img className="card-img-top event-image" src={image} alt={event_data[0]} />
-          </Link>
-					<div className="card-header text-muted event-header ">
-						<img className="float-left" src={makeBlockie(event_data[9])} alt={event_data[9]} />
+						<div className="image_wrapper">
+						<Link to={"/event/" + this.props.id}>
+            			<img className="card-img-top event-image" src={image} alt={event_data[0]} />
+          				</Link>
+						{soldOut}
+						</div>
+
+		  			<div className="card-header text-muted event-header ">
+						<img className="float-left" src={makeBlockie(event_data[9])} alt={event_data[9]} />				
 						<p className="small text-truncate mb-0">
 							Creator: <a href={"https://rinkeby.etherscan.io/address/" + event_data[9]} target="_blank" className="event_creator-link">
 								{event_data[9]}
@@ -208,7 +214,7 @@ class Event extends Component {
 						</div>
 					
 					
-					<ul className="list-group list-group-flush">
+					<ul className="check list-group list-group-flush">
 						<li className="list-group-item ">{locations}</li>
 						<li className="list-group-item"><strong>Category:</strong> {event_data[8]}</li>
 						<li className="list-group-item"><strong>Price:</strong> <img src={'/images/'+symbol} className="event_price-image" alt="Event Price Icon" /> {price}</li>

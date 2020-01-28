@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { drizzleConnect } from 'drizzle-react';
 import { ToastContainer, toast } from 'react-toastify';
+import Web3 from 'web3';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'startbootstrap-simple-sidebar/css/simple-sidebar.css';
@@ -25,6 +26,7 @@ import Token from './Token';
 import Notify from './Notify';
 import NetworkError from './NetworkError';
 import LoadingApp from './LoadingApp';
+import Calendars from './Calendars';
 
 class App extends Component
 {
@@ -36,6 +38,8 @@ class App extends Component
 			showSidebar: true
 		};
 	}
+
+	
 
 	componentWillUpdate() {
 		let sent_tx = this.state.sent_tx;
@@ -58,6 +62,8 @@ class App extends Component
 		}
 	}
 
+
+ 
 	render() {
 		
 		let body;
@@ -69,6 +75,10 @@ class App extends Component
 		// console.log(randomBG);
 
 		if (!this.props.drizzleStatus.initialized) {
+			console.log("process",process.env.NODE_ENV)
+			console.log("netowork id",this.props.web3.networkId)
+			console.log("account",this.props.accounts)
+			console.log("web3 status",this.props.web3.status)
 			body =
 				<div>
 					<Switch>
@@ -83,10 +93,15 @@ class App extends Component
 			(this.props.web3.status === 'initialized' && Object.keys(this.props.accounts).length === 0) ||
 			(process.env.NODE_ENV === 'production' && this.props.web3.networkId !== 4)
 		) {
+			console.log("process",process.env.NODE_ENV)
+			console.log("netowork id",this.props.web3.networkId)
+			console.log("account",Object.keys(this.props.accounts).length)
+			console.log("web3 status",this.props.web3.status)
 			body =
 				<div>
 					<Switch>
 						<Route exact path="/" component={Home} />
+						<Route path="/token" component={Token} />
 						<Route component={NetworkError} />
 					</Switch>
 				</div>
@@ -107,6 +122,7 @@ class App extends Component
 					<Route path="/topic/:page/:id" component={TopicLandingPage} />
 					<Route path="/locations" component={LocationsLandingPage} />
 					<Route path="/location/:page" component={LocationLandingPage} />
+					<Route path="/Calendar" component={Calendars} />
 					<Route path="/how-it-works" component={Home} />
 				</div>
 			;

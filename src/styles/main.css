@@ -47,7 +47,7 @@ button {
 }
 
 #sidebar-wrapper.my-sidebar {
-	background-color: #333940;
+	background-color: #1f2327;
 	color: #FAFAFA;
 	padding: 20px;
 	opacity: 0.7;
@@ -143,6 +143,10 @@ button {
 	width: 38px;
 	margin-right: 0;
 	margin-top: -3px;
+}
+
+.card-header {
+	z-index:100;
 }
 
 .card-footer {
@@ -416,6 +420,7 @@ button {
 
 .navbar-light .navbar-nav .nav-link {
   color: rgb(255, 255, 255);
+  
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
@@ -661,12 +666,12 @@ button.read-more:hover {
 	border-color: #4f6e8d;
   }
 
+  /*Transaction style */
   .transactions{
 	text-align:center; 
 	padding:5px;
 	
   }
-
 
   .sold_text{
 	padding:8px;
@@ -677,6 +682,16 @@ button.read-more:hover {
 	overflow:hidden;
 	
   }
+
+  .sold_text a{
+	  color:white;
+	  text-decoration: none;
+  }
+
+  .sold_text a:hover{
+	color:rgb(56, 160, 201);
+	text-decoration: none;
+}
 
   .transaction-wrapper{
 	margin-top:30px;
@@ -691,5 +706,220 @@ button.read-more:hover {
 	overflow:hidden;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;	
 	opacity: 0.9;
+	
+	
   }
+
+  /*Event Countdown style*/
+  .countdown{
+	  text-align:center;
+	  color:white;
+	  border-radius:5px;
+	  margin-top:20px;
+	  overflow:hidden;
+	  background:#343a40;
+	  border:1px solid #343a40;
+	  max-height:100px;
+  }
+  .countdown h5{
+	  text-align:center;
+	  text-transform:uppercase;
+	  font-size:16px;
+  }
+
+  .clock {
+	margin:auto;
+	display:flex;
+   
+}
+
+  .clock p{
+	  font-weight:bold;
+	  position:relative;
+	  width:100%;
+	  padding: 7px 20px 7px;
+	  background:rgb(248, 245, 245);
+	  border:2px solid #343a40;
+	  display:flex;
+	  color:black;
+	  background:linear-gradient(to bottom, rgb(255, 255, 255),rgb(172, 172, 172));
+	  border-radius:5px;
+	
+	 
+  }
+
+  .clock p:last-child{
+	  background:linear-gradient(to top, rgb(4, 73, 129),rgb(93, 132, 165),rgb(150, 188, 219))!important;
+	  color:white;
+  }
+
+ 
+  /*sold-out style*/
+  .sold_out{
+	  top:1rem;
+	  left:-6rem;
+	  color:rgb(214, 140, 3);
+	  display:block;
+	  position:absolute;
+	  text-align:center;
+	  text-decoration:none;
+	  letter-spacing:.06rem;
+	  background:linear-gradient(45deg, rgb(136, 6, 28),rgb(65, 3, 13),rgb(68, 44, 48))!important;
+	  padding:0.5em 5em 0.4em 5em;
+	  -webkit-transform: rotate(-45deg) scale(0.75,1);
+	  z-index:10;
+	  height:40px;
+	  font: bold 17px/1.2 Verdana, Geneva, Tahoma, sans-serif;
+	  overflow:hidden;
+  }
+
+  .sold_out:before{
+	content:'';
+	top:0;
+	left:0px;
+	bottom:0;
+	right:0px;
+	position:absolute;
+	margin:-0.3em -5em;
+	transform: scale(0.7);
+	-webkit-transform: scale(0.7);
+	border: 2px dashed rgb(209, 177, 59);
+	
+  }
+
+  .image_wrapper{
+	  overflow:hidden;
+	  position:relative;
+	  z-index:1;
+  }
+  
+
+  /*Calendar-style*/
+  .rbc-day-bg {
+	background:rgba(5, 146, 211, 0.089);
+	border-left:1px solid rgba(85, 84, 84, 0.548)!important;
+  }
+
+  .rbc-month-view{
+	border-right:1px solid rgba(85, 84, 84, 0.548)!important;
+	border-top:1px solid rgba(85, 84, 84, 0.548)!important;
+	border-bottom:1px solid rgba(85, 84, 84, 0.548)!important;
+  }
+  
+  .rbc-off-range-bg {
+	background:rgba(143, 101, 121, 0.137)!important;	
+  }
+
+  .rbc-month-row{
+	border-top:1px solid rgba(85, 84, 84, 0.548)!important;
+  }
+
+  .rbc-header{
+	background:linear-gradient(45deg, rgb(4, 73, 129),rgb(93, 132, 165),rgb(150, 188, 219))!important;
+	border:1px solid rgba(85, 84, 84, 0.548);
+	border-bottom:none;
+	padding:8px!important;
+	color:white!important;
+  }
+
+  .rbc-event{
+	background:linear-gradient(45deg, rgb(4, 73, 129),rgb(93, 132, 165),rgb(150, 188, 219))!important;
+	border:0.5px solid rgb(88, 53, 80)!important;
+	color:rgb(255, 255, 255);
+	font-size:12px;
+}
+
+.rbc-toolbar-label{
+	border:1px solid black;
+	background:linear-gradient(45deg, rgb(32, 53, 5),rgb(21, 187, 60),rgb(12, 8, 9))!important;
+	background:linear-gradient(45deg, rgb(1, 16, 22),rgb(7, 117, 108),rgb(1, 17, 24))!important;
+	
+	font-weight: bold;
+	color:rgb(243, 236, 236)!important;
+	padding: .135rem 1rem!important;
+}
+
+.rbc-toolbar button{
+	background:linear-gradient(45deg, rgb(24, 1, 1),rgb(97, 15, 15))!important;
+	background:linear-gradient(45deg,rgb(3, 47, 65),rgb(17, 13, 14))!important;
+	color:white!important;
+
+  }
+
+.rbc-toolbar{
+	margin-bottom:20px!important;
+  }
+  
+.rbc-today{
+	background:rgba(5, 146, 211, 0.26)!important;
+	color:white;
+  }
+  
+.rbc-time-content{
+	color:rgb(10, 10, 10)!important;
+	border-top:1px solid rgba(85, 84, 84, 0.548)!important;
+	background:rgba(143, 101, 121, 0.137)!important;	
+
+  }
+
+.rbc-time-header-gutter{
+	background:rgba(5, 146, 211, 0.089);
+  }
+
+  .rbc-time-slot{
+	border:none!important;
+}
+
+.rbc-time-content > * + * > * {
+	border-left: 1px solid rgba(85, 84, 84, 0.548)!important;
+	
+}
+
+.rbc-timeslot-group {
+	border-bottom: 1px solid rgba(85, 84, 84, 0.548)!important;
+}
+
+.rbc-time-view {
+    border: 1px solid rgba(85, 84, 84, 0.548)!important;
+}
+
+.rbc-agenda-date-cell,.rbc-agenda-time-cell{
+
+	background:rgba(143, 101, 121, 0.137);
+	color:rgb(12, 12, 12);
+	border: 1px solid rgba(85, 84, 84, 0.548);
+  }
+
+  .rbc-agenda-time-cell{
+	color:rgb(7, 7, 7);
+  }
+
+  .rbc-agenda-event-cell{
+	background:rgba(5, 146, 211, 0.089);
+	border: 1px solid rgba(85, 84, 84, 0.548);
+	color:rgb(0, 0, 0);
+  }
+
+ 
+  /*.rbc-show-more{
+	  color:rgb(219, 217, 217);
+  }
+
+  .rbc-show-more:hover{
+	  color:rgb(245, 243, 243)!important
+
+  }
+
+  .rbc-toolbar button{
+	background:linear-gradient(45deg, rgb(24, 1, 1),rgb(97, 15, 15))!important;
+	color:white!important;
+
+  }
+  .rbc-header{
+	background:linear-gradient(45deg,rgb(3, 47, 65),rgb(17, 13, 14))!important;
+	color:white!important;
+	
+  }
+
+  End of Calendar */
 

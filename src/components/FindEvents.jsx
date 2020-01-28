@@ -77,10 +77,10 @@ class FindEvents extends Component
     const blockNumber = await web3.eth.getBlockNumber();
     if (this._isMounted){
     this.setState({blocks:blockNumber - 50000});
-    this.setState({latestblocks:blockNumber});
+    this.setState({latestblocks:blockNumber - 1});
     this.setState({Events_Blockchain:[]});}
   
-    openEvents.getPastEvents("CreatedEvent",{fromBlock: 5000000, toBlock:'latest'})
+    openEvents.getPastEvents("CreatedEvent",{fromBlock: 5000000, toBlock:this.state.latestblocks})
     .then(events=>{
     if (this._isMounted){
     this.setState({loading:true})
@@ -95,7 +95,7 @@ class FindEvents extends Component
     }).catch((err)=>console.error(err))
 
     //Listens for New Events
-    openEvents.events.CreatedEvent({fromBlock: this.state.latestblocks, toBlock:'latest'})
+    openEvents.events.CreatedEvent({fromBlock: blockNumber, toBlock:'latest'})
     .on('data', (log) => setTimeout(()=> {
     if (this._isMounted){
     this.setState({loading:true});
@@ -108,7 +108,7 @@ class FindEvents extends Component
     this.setState({Events_Blockchain:newsort,event_copy:newsort});
     this.setState({active_length:this.state.Events_Blockchain.length})}
     this.setState({loading:false});
-    },8000))
+    },10000))
   }
 
   //Search Active Events By Name

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import makeBlockie from 'ethereum-blockies-base64';
 
+
 class Sidebar extends Component
 {
 
@@ -53,6 +54,9 @@ class Sidebar extends Component
 						<li className="nav-item">
 							<Link to="/mytickets/1" className="nav-link"><i className="fa fa-ticket-alt"></i> My Tickets</Link>
 						</li>
+						<li className="nav-item">
+							<Link to="/Calendar" className="nav-link"><i className="fa fa-calendar-alt"></i> Calendar</Link>
+						</li>
 					</ul>
 					<h5 className="mt-5">Manage Events</h5>
 					<ul className="nav flex-column">
@@ -69,7 +73,7 @@ class Sidebar extends Component
 							<Link to="/how-it-works" className="nav-link"><i className="fa fa-question-circle"></i> How It Works</Link>
 						</li>
 						<li className="nav-item">
-							<Link to="/token" className="nav-link"><img src="/image/hydro.png" className="sidebar_hydro-logo" alt="Hydro Token Logo"/> Get Hydro Tokens</Link>
+							<Link to="/token" className="nav-link"><img src="/images/hydro.png" className="sidebar_hydro-logo" alt="Hydro Token Logo"/> Get Hydro Tokens</Link>
 						</li>
 					</ul>
 					<br />

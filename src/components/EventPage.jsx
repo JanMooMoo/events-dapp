@@ -8,9 +8,12 @@ import Web3 from 'web3';
 
 import Loading from './Loading';
 import CheckUser from './CheckUser';
+import Clock from './Clock';
 import {Open_events_ABI, Open_events_Address} from '../config/OpenEvents';
 import {Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address} from '../config/hydrocontract_testnet';
 
+
+let numeral = require('numeral');
 
 class EventPage extends Component {
 
@@ -48,10 +51,13 @@ class EventPage extends Component {
 			  approve_tx: null,
 			  waiting_approve: false,
 			  account:[],
-			  soldTicket:[]
+			  soldTicket:[],
+			  hydro_market:[],
 			  
 		  };
 		  this.isCancelled = false;
+		  this._isMounted = false;
+		  
 	}
 
 	//Get SoldTicket Data
@@ -62,15 +68,15 @@ class EventPage extends Component {
 
     if (this._isMounted){
     this.setState({openEvents});
-    this.setState({hydroTransfer:[]});}
+    this.setState({soldTicket:[]});}
   
     const blockNumber = await web3.eth.getBlockNumber();
     if (this._isMounted){
     this.setState({blocks:blockNumber - 50000});
-    this.setState({latestblocks:blockNumber});
+    this.setState({latestblocks:blockNumber - 1});
     this.setState({soldTicket:[]});}
   
-    openEvents.getPastEvents("SoldTicket",{filter:{eventId:this.props.match.params.id},fromBlock: this.state.blocks, toBlock:'latest'})
+    openEvents.getPastEvents("SoldTicket",{filter:{eventId:this.props.match.params.id},fromBlock: 5000000, toBlock: this.state.latestblocks })
     .then(events=>{
 
     this.setState({loading:true})
@@ -80,12 +86,11 @@ class EventPage extends Component {
     this.setState({soldTicket:newsort,check:newsort});
     this.setState({loading:false})
     this.setState({active_length:this.state.soldTicket.length});
-    
   	}  
     }).catch((err)=>console.error(err))
 
 	//Listen for Incoming Sold Tickets
-    openEvents.events.SoldTicket({filter:{eventId:this.props.match.params.id},fromBlock: this.state.latestblocks, toBlock:'latest'})
+    openEvents.events.SoldTicket({filter:{eventId:this.props.match.params.id},fromBlock: blockNumber,toBlock:'latest'})
   	.on('data', (log) =>setTimeout(()=> {
     this.setState({loading:true});
     
@@ -97,7 +102,19 @@ class EventPage extends Component {
     this.setState({soldTicket:newsort});
     this.setState({active_length:this.state.soldTicket.length})}
     this.setState({loading:false});
-    }),5000)
+    }),15000)
+  }
+
+  //get market cap & dollar value of hydro
+  async getHydroMarketValue(){
+
+	fetch('https://api.coingecko.com/api/v3/simple/price?ids=Hydro&vs_currencies=usd&include_market_cap=true&include_24hr_change=ture&include_last_updated_at=ture')
+		  .then(res => res.json())
+		  .then((data) => {
+			if (this._isMounted){
+			this.setState({hydro_market: data.hydro })}
+		  })
+		  .catch(console.log)
   }
 
 	updateIPFS = () => {
@@ -179,6 +196,7 @@ class EventPage extends Component {
 	
 	render() {
 		let body = <Loading />;
+		
 
 		if (typeof this.props.contracts['OpenEvents'].getEvent[this.event] !== 'undefined') {
 			if (this.props.contracts['OpenEvents'].getEvent[this.event].error) {
@@ -218,7 +236,9 @@ class EventPage extends Component {
 				
 
 				body =
+				
 					<div className="row">
+						
 						<div className="col-6">
 							<h3>{event_data[0]}</h3>
 							{description}
@@ -226,7 +246,7 @@ class EventPage extends Component {
 								<button className="btn btn-dark" onClick={this.buyTicket} disabled={disabled}><i className="fas fa-ticket-alt"></i> Buy Ticket</button>
 								<label className="pl-2 small">{disabledStatus}</label>
 							</div>
-							<CheckUser event_id={this.props.match.params.id} />
+							<CheckUser event_id={this.props.match.params.id} /> 
 						</div>
 						<div className="col-6">
 							<div className="card">
@@ -241,23 +261,27 @@ class EventPage extends Component {
 								</div>
 								<ul className="list-group list-group-flush">
 									<li className="list-group-item">Category: {event_data[8]}</li>
-									<li className="list-group-item">Price: <img src={'/images/'+symbol} className="event_price-image"  alt="Event Price" /> {price}</li>
+									<li className="list-group-item">Price: <img src={'/images/'+symbol} className="event_price-image"  alt="Event Price" /> {price} {event_data[3] ? 'or $ '+ numeral(price * this.state.hydro_market.usd).format('0,0.000'):''}</li>
 									<li className="list-group-item">{date.toLocaleDateString()} at {date.toLocaleTimeString()}</li>
 									<li className="list-group-item">Tickets: {event_data[6]}/{max_seats}</li>
 								</ul>
+								
 							</div>
+							{this._isMounted && <Clock deadline = {date} event_unix = {event_data[1]}></Clock>}
+							
 						</div>
 						<hr/>
 						
 						<div className="transaction-wrapper col-12"><h4 className="transactions">Transactions</h4>
 						
-						{this.state.soldTicket.map((sold,index)=>(<p className="sold_text col-md-12" key={index}>{sold.returnValues.buyer} has bought 1 ticket for {event_data[0]}</p>))}
+						{this.state.soldTicket.map((sold,index)=>(<p className="sold_text col-md-12" key={index}><a href={"https://rinkeby.etherscan.io/tx/" + sold.transactionHash} target="_blank">
+										
+										{sold.returnValues.buyer}</a> has bought 1 ticket for {event_data[0]}</p>))}
 						{!sold &&  <p className="sold_text col-md-12" >No one has bought a ticket so far,</p>}
       
-						
 						</div>
-						
-						
+						<hr/>
+													
 					</div>
 					
 				;
@@ -272,6 +296,7 @@ class EventPage extends Component {
 				<hr />
 				{body}
 				<hr/>
+				
 		 			
 			</div>
 		);
@@ -281,6 +306,8 @@ class EventPage extends Component {
 		this._isMounted = true;
 		this.updateIPFS();
 		this.loadblockhain();
+		this.getHydroMarketValue();
+		
 	}
 
 	componentDidUpdate() {
@@ -290,6 +317,7 @@ class EventPage extends Component {
 
 	componentWillUnmount() {
 		this.isCancelled = true;
+		this._isMounted = false;
 	}
 }
 

@@ -25,7 +25,7 @@ class MyTickets extends Component {
 
 		if (typeof this.props.contracts['OpenEvents'].ticketsOf[this.tickets] !== 'undefined') {
 			let allTickets = this.props.contracts['OpenEvents'].ticketsOf[this.tickets].value;
-
+			
 			if (allTickets.length === 0) {
 				body =
 					<div className="no-tickets text-center mt-5">
@@ -49,10 +49,9 @@ class MyTickets extends Component {
 
 				for (let i = start; i < end; i++) {
 					let ticket = parseInt(allTickets[i], 10);
-					tickets.push(<Ticket key={tickets} id={ticket} />);
+					tickets.push(<Ticket key={ticket} id={ticket} />);
 				}
-				tickets.reverse();
-
+				
 				let pagination;
 				if (pages > 1) {
 					let links = [];

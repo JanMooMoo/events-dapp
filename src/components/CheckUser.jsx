@@ -156,10 +156,10 @@ class CheckUser extends Component {
 				{message}
 				<ul className="nav nav-pills nav-fill nav-justified mt-3">
 					<li className="nav-item">
-						<a href="" className={"nav-link " + (this.state.tab === 1 ? 'active' : '')} onClick={(e) => this.changeTab(1, e)}>Enter Address</a>
+						<a href="" className={"nav-link button " + (this.state.tab === 1 ? 'active' : '')} onClick={(e) => this.changeTab(1, e)}>Enter Address</a>
 					</li>
 					<li className="nav-item">
-						<a href="" className={"nav-link " + (this.state.tab === 2 ? 'active' : '')} onClick={(e) => this.changeTab(2, e)}>QR scanner</a>
+						<a href="" className={"nav-link button " + (this.state.tab === 2 ? 'active' : '')} onClick={(e) => this.changeTab(2, e)}>QR scanner</a>
 					</li>
 				</ul>
 				{body}

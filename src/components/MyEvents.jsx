@@ -49,11 +49,11 @@ class MyEvents extends Component {
 		const blockNumber = await web3.eth.getBlockNumber();
 		this.setState({dateNow})
 		this.setState({blocks:blockNumber - 50000});
-		this.setState({latestblocks:blockNumber});
+		this.setState({latestblocks:blockNumber - 1});
 		this.loadActiveEvents()
 		
 		//Listen For My Newly Created Events
-		this.state.openEvents.events.CreatedEvent({filter:{owner:this.account},fromBlock: this.state.latestblocks, toBlock:'latest'})
+		this.state.openEvents.events.CreatedEvent({filter:{owner:this.account},fromBlock: blockNumber, toBlock:'latest'})
 		.on('data', (log) => setTimeout(()=> {
 		if(this.state.isActive){
 		this.setState({loading:true});
@@ -66,7 +66,7 @@ class MyEvents extends Component {
 		this.setState({active_length:this.state.MyEvents.length})
 		this.setState({loading:false})};
 		
-		},8000))
+		},10000))
 		}
 	}
 
@@ -76,7 +76,7 @@ class MyEvents extends Component {
 		if (this._isMounted){
 		this.setState({MyEvents:[],active_length:0}); }
 	  
-		this.state.openEvents.getPastEvents("CreatedEvent",{filter:{owner:this.account},fromBlock: 5000000, toBlock:'latest'})
+		this.state.openEvents.getPastEvents("CreatedEvent",{filter:{owner:this.account},fromBlock: 5000000, toBlock:this.state.latestblocks})
 		.then(events=>{
 		this.setState({loading:true})
 		var newest = events.filter((activeEvents)=>activeEvents.returnValues.time >=(this.state.dateNow));
