@@ -180,6 +180,7 @@ class App extends Component
 						<img src="/images/hydro.png" className="branding-logo" alt="hydro logo" /> 
 						<h1>Hydro Events Marketplace</h1>
 						<p>What are you going to do?</p>
+						
 						</div>
 						<div className="container-fluid">
 							<div className="page-wrapper-inner">
