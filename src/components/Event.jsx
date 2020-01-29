@@ -118,12 +118,15 @@ class Event extends Component {
 	}
 
 	afterApprove = () => setTimeout(()=>{
+		console.log("appoved",this.account)
 		if (this.state.waiting_approve) {
+			console.log("wating for aprovel")
 			if (typeof this.props.transactionStack[this.state.approve_tx] !== 'undefined') {
+				console.log('afterapproved')
 				this.setState({
 					waiting_approve: false
 				}, () => {
-					this.contracts['OpenEvents'].methods.buyTicket.cacheSend(this.props.id);
+					this.contracts['OpenEvents'].methods.buyTicket.cacheSend(this.props.id,{from:this.account});
 				});
 			}
 		}
