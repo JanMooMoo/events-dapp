@@ -142,7 +142,9 @@ class App extends Component
 				<div>
 					<Switch>
 						<Route exact path="/" component={Home} />
-						<Route component={NetworkError} />
+						<Route path="/findevents/:page" component={FindEvents} />
+						<Route path="/pastevents/:page" component={PastEvents} />
+					
 					</Switch>
 				</div>
 			;
